@@ -1,0 +1,155 @@
+/* Reset & Global */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+  background: linear-gradient(135deg, #f4f8fb, #e9f5ff);
+  color: #333;
+  line-height: 1.6;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+#page {
+  width: 90%;
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Header */
+header {
+  text-align: center;
+  padding: 25px;
+  background: linear-gradient(90deg, #0077b6, #0096c7);
+  color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+header img {
+  display: block;
+  margin: auto;
+  max-width: 120px;
+  border-radius: 50%;
+}
+
+/* Navigation */
+nav ul {
+  list-style: none;
+  margin: 15px 0;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline-block;
+  margin: 0 18px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.05rem;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+nav ul li a::after {
+  content: "";
+  display: block;
+  height: 2px;
+  background: #90e0ef;
+  width: 0;
+  transition: width 0.3s ease;
+  margin: auto;
+}
+
+nav ul li a:hover {
+  color: #90e0ef;
+}
+
+nav ul li a:hover::after {
+  width: 100%;
+}
+
+/* Article / Content */
+article {
+  background: #fff;
+  padding: 25px;
+  margin: 20px 0;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+
+article:hover {
+  transform: translateY(-5px);
+}
+
+h2 {
+  color: #0077b6;
+  margin-bottom: 12px;
+}
+
+/* Buttons */
+button, .btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 25px;
+  background: #0077b6;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+button:hover, .btn:hover {
+  background: #023e8a;
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9em;
+  color: #555;
+  margin-top: 30px;
+}
+
+footer .up {
+  display: inline-block;
+  margin-top: 12px;
+  text-decoration: none;
+  color: #0077b6;
+  font-weight: bold;
+  padding: 8px 15px;
+  border-radius: 25px;
+  border: 2px solid #0077b6;
+  transition: all 0.3s ease;
+}
+
+footer .up:hover {
+  color: white;
+  background: #0077b6;
+  transform: translateY(-3px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  nav ul li {
+    display: block;
+    margin: 10px 0;
+  }
+
+  article {
+    padding: 20px;
+  }
+}

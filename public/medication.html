@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Medication Tracker - MedBuddy</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="css/theme.css" />
+  <style>
+    body {
+      background: linear-gradient(135deg, #03045e, #0077b6, #00b4d8);
+      color: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* NAVIGATION BAR */
+    nav {
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding: 12px 0;
+    }
+    nav .nav-link {
+      color: #caf0f8;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    nav .nav-link:hover {
+      color: #90e0ef;
+      text-shadow: 0 0 8px rgba(144, 224, 239, 0.6);
+    }
+
+    /* MAIN CONTAINER */
+    .tracker-container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 40px;
+    }
+
+    .card-surface {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      backdrop-filter: blur(10px);
+      color: #fff;
+    }
+
+    .card-surface h2 {
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    .form-control {
+      background-color: rgba(255,255,255,0.15);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .form-control:focus {
+      background-color: rgba(255,255,255,0.25);
+      outline: none;
+      box-shadow: 0 0 10px #90e0ef;
+    }
+
+    .btn-action {
+      background: linear-gradient(135deg, #0077b6, #00b4d8);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      padding: 12px;
+      font-weight: 600;
+      transition: 0.3s;
+      width: 100%;
+    }
+
+    .btn-action:hover {
+      transform: scale(1.05);
+      background: linear-gradient(135deg, #00b4d8, #023e8a);
+      box-shadow: 0 4px 20px rgba(0, 180, 216, 0.4);
+    }
+
+    .med-history {
+      margin-top: 40px;
+    }
+
+    .med-history h4 {
+      color: #90e0ef;
+      border-bottom: 2px solid rgba(144,224,239,0.3);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+
+    .med-item {
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 15px 20px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .med-item:hover {
+      background: rgba(255,255,255,0.15);
+      transform: translateY(-3px);
+    }
+
+    .status {
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .status.active { background: #48cae4; color: #023e8a; }
+    .status.completed { background: #90be6d; color: #1b4332; }
+    .status.missed { background: #f94144; color: #fff; }
+
+    footer {
+      text-align: center;
+      color: #90e0ef;
+      font-size: 0.9rem;
+      padding: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <nav class="mb-4">
+    <ul class="nav justify-content-center">
+      <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+      <li class="nav-item"><a class="nav-link active" href="medication.html">Medications</a></li>
+      <li class="nav-item"><a class="nav-link" href="symptom-tracker.html">Symptoms</a></li>
+      <li class="nav-item"><a class="nav-link" href="appointments.html">Appointments</a></li>
+      <li class="nav-item"><a class="nav-link" href="health-insights.html">Health Insights</a></li>
+      <li class="nav-item"><a class="nav-link" href="settings.html">Settings</a></li>
+    </ul>
+  </nav>
+
+  <div class="tracker-container">
+    <div class="card-surface">
+      <div class="text-center mb-4">
+        <img src="images/medbuddy_logo.png" alt="MedBuddy Logo" class="mb-3" width="90">
+        <h2>Medication Tracker</h2>
+        <p class="text-light">Track, manage, and review your daily medications efficiently.</p>
+      </div>
+
+      <form id="medicationForm">
+        <div class="mb-3">
+          <label for="medication" class="form-label">Medication Name</label>
+          <input type="text" class="form-control" id="medication" placeholder="e.g. Paracetamol 500mg" required>
+        </div>
+        <div class="mb-3">
+          <label for="dosage" class="form-label">Dosage Instructions</label>
+          <input type="text" class="form-control" id="dosage" placeholder="e.g. Twice daily after meals" required>
+        </div>
+        <button type="submit" class="btn-action">Add Medication</button>
+      </form>
+
+      <div class="med-history">
+        <h4>Medication History</h4>
+        <div class="med-item">
+          <span>Paracetamol 500mg - Morning</span>
+          <span class="status active">Active</span>
+        </div>
+        <div class="med-item">
+          <span>Vitamin D - Afternoon</span>
+          <span class="status completed">Completed</span>
+        </div>
+        <div class="med-item">
+          <span>Ibuprofen - Evening</span>
+          <span class="status missed">Missed</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>© 2025 MedBuddy | Your Health, Simplified.</footer>
+
+  <script src="js/medbuddy.js"></script>
+  <script>
+    document.getElementById('medicationForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const med = document.getElementById('medication').value;
+      const dosage = document.getElementById('dosage').value;
+      alert(`Medication "${med}" added successfully!`);
+    });
+  </script>
+</body>
+</html>

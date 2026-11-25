@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment - MedBuddy</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #152b42, #0d1b2a);
+      color: #e0e6ed;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .payment-container {
+      background: #1f3b5a;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      width: 100%;
+      max-width: 500px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #32c3ff;
+      text-shadow: 0 0 8px rgba(50,195,255,0.5);
+    }
+    .btn-danger {
+      background: linear-gradient(135deg, #ff4d4d, #ff1a1a);
+      border: none;
+      color: white;
+      font-weight: bold;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+    .btn-danger:hover {
+      background: linear-gradient(135deg, #ff1a1a, #e60000);
+      transform: scale(1.05);
+      box-shadow: 0px 4px 12px rgba(255,0,0,0.55);
+    }
+    .logout-btn, .back-btn {
+      display: block;
+      margin: 10px auto 0 auto;
+      text-align: center;
+      font-weight: bold;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 20px;
+      transition: all 0.3s ease;
+    }
+    .logout-btn {
+      background: #32c3ff;
+      color: #152b42;
+    }
+    .logout-btn:hover {
+      background: #48cae4;
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(50,195,255,0.5);
+    }
+    .back-btn {
+      background: #90e0ef;
+      color: #152b42;
+    }
+    .back-btn:hover {
+      background: #48cae4;
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(50,195,255,0.5);
+    }
+  </style>
+</head>
+<body>
+  <div class="payment-container">
+    <h2>Payment by Credit Card</h2>
+    <form id="paymentForm">
+      <div class="mb-3">
+        <label for="cardNumber" class="form-label">Card Number</label>
+        <input type="text" id="cardNumber" class="form-control" placeholder="1234567812345678" required>
+      </div>
+      <div class="mb-3">
+        <label for="expiryDate" class="form-label">Expiry Date (MM/YY)</label>
+        <input type="text" id="expiryDate" class="form-control" placeholder="MM/YY" required>
+      </div>
+      <div class="mb-3">
+        <label for="cvv" class="form-label">CVV</label>
+        <input type="text" id="cvv" class="form-control" placeholder="123" required>
+      </div>
+      <button type="submit" class="btn btn-danger">Pay</button>
+    </form>
+
+    <button class="back-btn" id="backHomeBtn">Back to Home</button>
+    <button class="logout-btn" id="logoutBtn">Logout</button>
+  </div>
+
+  <script>
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+    if(!currentUser) {
+      alert("⚠️ Please login first!");
+      window.location.href = "login.html";
+    }
+
+    const paymentForm = document.getElementById("paymentForm");
+    paymentForm.addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const cardNumber = document.getElementById("cardNumber").value.trim();
+      const expiryDate = document.getElementById("expiryDate").value.trim();
+      const cvv = document.getElementById("cvv").value.trim();
+
+      if(!/^\d{16}$/.test(cardNumber)) {
+        alert("⚠️ Card number must be 16 digits.");
+        return;
+      }
+      if(!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiryDate)) {
+        alert("⚠️ Expiry date must be in MM/YY format.");
+        return;
+      }
+      if(!/^\d{3}$/.test(cvv)) {
+        alert("⚠️ CVV must be 3 digits.");
+        return;
+      }
+
+      const paymentData = {
+        userName: currentUser.userName,
+        emailId: currentUser.emailId,
+        cardNumber,
+        expiryDate,
+        cvv,
+        amount: 100 // fixed demo amount
+      };
+
+      try {
+        const res = await fetch('http://localhost:3000/payment', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(paymentData)
+        });
+
+        const data = await res.json();
+
+        if(data.success) {
+          alert(`✅ Payment of $${paymentData.amount} successful! Thank you, ${currentUser.userName}.`);
+          paymentForm.reset();
+        } else {
+          alert('❌ Payment failed. Please try again.');
+        }
+      } catch(err) {
+        console.error(err);
+        alert('⚠️ Error processing payment. Try again later.');
+      }
+    });
+
+    document.getElementById("backHomeBtn").addEventListener("click", function() {
+      window.location.href = "index.html";
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", function() {
+      localStorage.removeItem("currentUser");
+      alert("You have logged out ✅");
+      window.location.href = "login.html";
+    });
+  </script>
+</body>
+</html>

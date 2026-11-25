@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MedBuddy - Health Tracker</title>
+
+  <!-- Bootstrap CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #152b42, #0d1b2a); color: #e0e6ed; }
+    header { text-align: center; background: #1f3b5a; border-radius: 20px; padding: 25px; box-shadow: 0px 6px 20px rgba(0,0,0,0.5); margin-bottom: 30px; }
+    header .logo { width: 120px; padding: 12px; border-radius: 50%; background: #e0e6ed1a; box-shadow: 0px 4px 16px rgba(0, 255, 200, 0.35); }
+    header h2 { margin: 10px 0 5px 0; font-size: 2.2rem; color: #32c3ff; text-shadow: 0 0 10px rgba(50,195,255,0.6); }
+    header h4 { margin-bottom: 10px; color: #a0c4ff; font-weight: 500; }
+    nav ul { padding: 0; margin: 20px 0 0 0; display: flex; justify-content: center; gap: 20px; list-style: none; flex-wrap: wrap; }
+    nav ul li a { text-decoration: none; color: #32c3ff; font-weight: bold; padding: 10px 18px; border-radius: 12px; transition: all 0.3s ease; background: rgba(255,255,255,0.05); }
+    nav ul li a:hover { background: #32c3ff; color: #152b42; box-shadow: 0px 4px 12px rgba(50,195,255,0.5); }
+    #welcomeUser { margin-top: 12px; font-size: 1.1rem; color: #90e0ef; font-weight: bold; text-shadow: 0 0 6px rgba(50,195,255,0.5); }
+    #articles { display: grid; gap: 25px; }
+    article { background: #ffffff1a; padding: 25px; border-radius: 16px; box-shadow: 0px 6px 18px rgba(0,0,0,0.3); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    article:hover { transform: translateY(-5px); box-shadow: 0px 12px 24px rgba(50,195,255,0.35); }
+    article h2 { color: #32c3ff; margin-bottom: 12px; text-shadow: 0 0 8px rgba(50,195,255,0.5); }
+    article p { font-size: 1rem; line-height: 1.6; color: #d0e6f5; }
+    .btn-action { display: inline-block; margin-top: 15px; padding: 10px 18px; border-radius: 12px; text-decoration: none; font-weight: bold; background: linear-gradient(135deg, #32c3ff, #0077b6); color: white; transition: all 0.3s ease; box-shadow: 0 0 10px rgba(50,195,255,0.5); }
+    .btn-action:hover { background: linear-gradient(135deg, #48cae4, #0096c7); transform: scale(1.05); box-shadow: 0 4px 12px rgba(50,195,255,0.55); }
+    footer { text-align: center; margin-top: 40px; padding: 20px; background: #1f3b5a; border-radius: 16px; box-shadow: 0px 4px 15px rgba(0,0,0,0.35); }
+    footer .line { height: 3px; width: 65%; background: linear-gradient(90deg, #0096c7, #32c3ff, #48cae4); margin: 0 auto 15px auto; border-radius: 50px; }
+    footer p { margin: 0; color: #cfd8e3; }
+    footer .up { display: inline-block; margin-top: 12px; padding: 10px 16px; border-radius: 12px; text-decoration: none; background: linear-gradient(135deg, #32c3ff, #0077b6); color: white; font-weight: bold; transition: all 0.3s ease; box-shadow: 0 0 10px rgba(50,195,255,0.5); }
+    footer .up:hover { background: linear-gradient(135deg, #48cae4, #0096c7); transform: scale(1.07); box-shadow: 0 4px 15px rgba(50,195,255,0.55); }
+  </style>
+</head>
+<body>
+  <div class="container py-4">
+    <header>
+      <hgroup>
+        <img src="images/medbuddy_logo.png" alt="MedBuddy Logo" class="logo">
+        <h2>MedBuddy</h2>
+        <h4>Your Personal Health Companion</h4>
+        <div id="welcomeUser"></div>
+      </hgroup>
+      <nav>
+        <ul id="navLinks">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="registration.html">Register</a></li>
+          <li><a href="profile.html" id="profileLink" style="display: none;">Profile</a></li>
+          <li><a href="payment.html" id="paymentLink" style="display: none;">Payment</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <section id="articles">
+      <article id="about">
+        <h2>About MedBuddy</h2>
+        <p>MedBuddy is a comprehensive health tracker app that helps you log daily symptoms, monitor medications, schedule appointments, and gain actionable insights.</p>
+      </article>
+      <article id="symptoms">
+        <h2>Symptom Tracker</h2>
+        <p>Track your symptoms daily and view trends over time. Add notes for each entry and receive insights that help identify triggers, patterns, and improvement areas.</p>
+      </article>
+      <article id="medications">
+        <h2>Medication Tracker</h2>
+        <p>Manage prescribed medications with reminders, dosage tracking, and refill notifications. Monitor adherence and ensure timely intake for better treatment outcomes.</p>
+      </article>
+      <article id="appointments">
+        <h2>Appointment Manager</h2>
+        <p>Schedule and manage medical appointments easily. Receive reminders and log notes from consultations to keep a complete health record.</p>
+      </article>
+    </section>
+
+    <footer>
+      <div class="line"></div>
+      <p>Copyright © 2025 - MedBuddy</p>
+      <a href="#top" class="up">Go Up</a>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const navLinks = document.getElementById("navLinks");
+    const welcomeUserDiv = document.getElementById("welcomeUser");
+
+    // Fetch current user from server via API if logged in
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+    function buildNav(user = null) {
+      // Use direct file links since we're using static HTML pages
+      navLinks.innerHTML = `
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#symptoms">Symptoms</a></li>
+        <li><a href="index.html#medications">Medications</a></li>
+        <li><a href="index.html#appointments">Appointments</a></li>
+      `;
+
+      if (user) {
+        welcomeUserDiv.textContent = `👋 Hello, ${user.userName}`;
+        navLinks.innerHTML += `
+          <li><a href="profile.html">Profile</a></li>
+          <li><a href="payment.html">Payments</a></li>
+          <li><a href="#" id="logoutBtn">Logout</a></li>
+        `;
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+          localStorage.removeItem("currentUser");
+          // redirect to the login page
+          window.location.href = "login.html";
+        });
+      } else {
+        navLinks.innerHTML += `
+          <li><a href="login.html">Login</a></li>
+          <li><a href="registration.html">Sign Up</a></li>
+        `;
+      }
+    }
+
+    buildNav(currentUser);
+  </script>
+</body>
+</html>

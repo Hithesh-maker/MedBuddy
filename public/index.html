@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MedBuddy - Your AI Health Companion</title>
+
+  <!-- Bootstrap CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/pages/index.css">
+
+  <style>
+    /* --- GLOBAL STYLING --- */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0d1b2a, #152b42);
+      color: #e0e6ed;
+      overflow-x: hidden;
+    }
+    .container { max-width: 1200px; }
+
+    /* --- HEADER --- */
+    header {
+      text-align: center;
+      background: #1f3b5a;
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0px 6px 20px rgba(0,0,0,0.5);
+      margin-bottom: 30px;
+    }
+    header .logo {
+      width: 120px;
+      padding: 12px;
+      border-radius: 50%;
+      background: #e0e6ed1a;
+      box-shadow: 0px 4px 16px rgba(0, 255, 200, 0.35);
+    }
+    header h2 {
+      margin: 10px 0 5px 0;
+      font-size: 2.4rem;
+      color: #32c3ff;
+      text-shadow: 0 0 10px rgba(50,195,255,0.6);
+    }
+    header h4 {
+      margin-bottom: 10px;
+      color: #a0c4ff;
+      font-weight: 500;
+    }
+
+    /* --- NAVIGATION --- */
+    nav ul {
+      padding: 0;
+      margin: 20px 0 0 0;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: #32c3ff;
+      font-weight: bold;
+      padding: 10px 18px;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      background: rgba(255,255,255,0.05);
+    }
+    nav ul li a:hover {
+      background: #32c3ff;
+      color: #152b42;
+      box-shadow: 0px 4px 12px rgba(50,195,255,0.5);
+    }
+
+    #welcomeUser {
+      margin-top: 12px;
+      font-size: 1.1rem;
+      color: #90e0ef;
+      font-weight: bold;
+      text-shadow: 0 0 6px rgba(50,195,255,0.5);
+    }
+
+    /* --- ARTICLES --- */
+    #articles { display: grid; gap: 25px; }
+
+    article {
+      background: #ffffff1a;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0px 6px 18px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    article:hover {
+      transform: translateY(-5px);
+      box-shadow: 0px 12px 24px rgba(50,195,255,0.35);
+    }
+    article h2 {
+      color: #32c3ff;
+      margin-bottom: 12px;
+      text-shadow: 0 0 8px rgba(50,195,255,0.5);
+    }
+    article p { font-size: 1rem; line-height: 1.6; color: #d0e6f5; }
+
+    /* --- FEATURE CARDS --- */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .feature-card {
+      background: rgba(255,255,255,0.05);
+      padding: 20px;
+      border-radius: 16px;
+      text-align: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(50,195,255,0.2);
+    }
+    .feature-card:hover {
+      background: rgba(50,195,255,0.1);
+      transform: translateY(-8px);
+      box-shadow: 0 0 20px rgba(50,195,255,0.4);
+    }
+    .feature-card h5 { color: #32c3ff; margin-top: 12px; }
+    .feature-card p { color: #cfd8e3; font-size: 0.95rem; }
+
+    /* --- ACTION BUTTONS --- */
+    .btn-action {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 18px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: bold;
+      background: linear-gradient(135deg, #32c3ff, #0077b6);
+      color: white;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(50,195,255,0.5);
+    }
+    .btn-action:hover {
+      background: linear-gradient(135deg, #48cae4, #0096c7);
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(50,195,255,0.55);
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      padding: 20px;
+      background: #1f3b5a;
+      border-radius: 16px;
+      box-shadow: 0px 4px 15px rgba(0,0,0,0.35);
+    }
+    footer .line {
+      height: 3px;
+      width: 65%;
+      background: linear-gradient(90deg, #0096c7, #32c3ff, #48cae4);
+      margin: 0 auto 15px auto;
+      border-radius: 50px;
+    }
+    footer p { margin: 0; color: #cfd8e3; font-size: 0.95rem; }
+    footer .up {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 10px 16px;
+      border-radius: 12px;
+      text-decoration: none;
+      background: linear-gradient(135deg, #32c3ff, #0077b6);
+      color: white;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(50,195,255,0.5);
+    }
+    footer .up:hover {
+      background: linear-gradient(135deg, #48cae4, #0096c7);
+      transform: scale(1.07);
+      box-shadow: 0 4px 15px rgba(50,195,255,0.55);
+    }
+  </style>
+</head>
+<body>
+  <div class="container py-4">
+    <!-- HEADER -->
+    <header>
+      <hgroup>
+        <img src="images/medbuddy_logo.png" alt="MedBuddy Logo" class="logo" />
+        <h2>MedBuddy</h2>
+        <h4>AI-Driven Personal Health & Wellness Companion</h4>
+        <div id="welcomeUser"></div>
+      </hgroup>
+      <nav>
+        <ul id="navLinks">
+          <li><a href="#about">About</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#ai">AI Insights</a></li>
+          <li><a href="#wellness">Wellness Hub</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="registration.html">Register</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- ABOUT SECTION -->
+    <section id="about">
+      <article>
+        <h2>About MedBuddy</h2>
+        <p>
+          MedBuddy is your intelligent healthcare assistant powered by advanced AI analytics. It helps you track symptoms, manage medications, schedule appointments, and monitor your overall wellness in one secure and personalized platform. 
+        </p>
+        <p>
+          Designed to make healthcare proactive, MedBuddy leverages AI predictions to alert you of potential health trends early — helping you and your doctor make better decisions.
+        </p>
+      </article>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section id="features">
+      <article>
+        <h2>Core Features</h2>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <h5>🩺 Symptom Tracker</h5>
+            <p>Log your daily symptoms and receive AI-driven pattern recognition reports.</p>
+          </div>
+          <div class="feature-card">
+            <h5>💊 Medication Manager</h5>
+            <p>Get smart reminders and track dosage history with adherence analytics.</p>
+          </div>
+          <div class="feature-card">
+            <h5>📅 Appointment Scheduler</h5>
+            <p>Manage appointments with doctors and sync with your calendar automatically.</p>
+          </div>
+          <div class="feature-card">
+            <h5>📈 Health Dashboard</h5>
+            <p>View interactive charts showing progress, stress levels, and lifestyle balance.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- AI INSIGHTS SECTION -->
+    <section id="ai">
+      <article>
+        <h2>AI-Powered Insights</h2>
+        <p>
+          MedBuddy uses machine learning to interpret your data and provide predictive insights:
+        </p>
+        <ul>
+          <li>🧠 Predict potential symptom escalation early</li>
+          <li>💤 Analyze sleep, diet, and stress correlations</li>
+          <li>⚕️ Suggest personalized wellness recommendations</li>
+          <li>📊 Generate monthly AI health summaries</li>
+        </ul>
+        <a href="ai-dashboard.html" class="btn-action">Explore AI Dashboard</a>
+      </article>
+    </section>
+
+    <!-- WELLNESS HUB -->
+    <section id="wellness">
+      <article>
+        <h2>Wellness Hub</h2>
+        <p>
+          Stay connected with verified doctors, mental health coaches, and nutritionists through MedBuddy’s integrated wellness hub.
+        </p>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <h5>🧘 Mind & Mood</h5>
+            <p>Guided meditation, mental health insights, and stress management tools.</p>
+          </div>
+          <div class="feature-card">
+            <h5>🍎 Nutrition Planner</h5>
+            <p>AI-assisted meal recommendations tailored to your health profile.</p>
+          </div>
+          <div class="feature-card">
+            <h5>🤖 Virtual Chatbot</h5>
+            <p>24/7 AI health assistant to answer questions and monitor daily logs.</p>
+          </div>
+        </div>
+        <a href="chatbot.html" class="btn-action mt-3">Chat with MedBuddy AI</a>
+      </article>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="line"></div>
+      <p>© 2025 MedBuddy | Powered by AI Health Intelligence</p>
+      <a href="#top" class="up">Go Up</a>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const navLinks = document.getElementById("navLinks");
+    const welcomeUserDiv = document.getElementById("welcomeUser");
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+    function buildNav(user = null) {
+      if (user) {
+        welcomeUserDiv.textContent = `👋 Welcome back, ${user.userName}`;
+        navLinks.innerHTML += `
+          <li><a href="profile.html">Profile</a></li>
+          <li><a href="payment.html">Payments</a></li>
+          <li><a href="#" id="logoutBtn">Logout</a></li>
+        `;
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+          localStorage.removeItem("currentUser");
+          window.location.href = "login.html";
+        });
+      }
+    }
+    buildNav(currentUser);
+  </script>
+</body>
+</html>

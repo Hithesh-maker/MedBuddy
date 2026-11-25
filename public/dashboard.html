@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>MedBuddy — AI Health Management Dashboard</title>
+
+  <!-- Chart.js & FontAwesome -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --bg-dark: #001233;
+      --bg-light: #005f99;
+      --accent: #00b4d8;
+      --accent-2: #48cae4;
+      --highlight: #8ee3f0;
+      --text: #edf2f4;
+      --muted: #cfe9f5;
+      --success: #76c893;
+      --alert: #e63946;
+      --radius: 18px;
+      --shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, var(--bg-dark), var(--bg-light), var(--accent));
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      background: rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 40px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: var(--shadow);
+    }
+
+    .nav-left { display: flex; align-items: center; gap: 14px; }
+    .nav-left .logo {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      width: 46px; height: 46px;
+      display: flex; justify-content: center; align-items: center;
+      border-radius: 14px;
+      color: #042226; font-weight: 800; font-size: 1.3rem;
+    }
+    .nav-left h1 {
+      margin: 0; font-size: 1.3rem; color: var(--highlight); font-weight: 700;
+    }
+
+    .nav-center { display: flex; gap: 28px; }
+    .nav-center a {
+      text-decoration: none;
+      color: var(--muted);
+      font-weight: 500;
+      transition: 0.3s;
+      position: relative;
+    }
+    .nav-center a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0%; height: 2px;
+      background: var(--accent);
+      transition: 0.3s;
+    }
+    .nav-center a:hover { color: var(--accent-2); }
+    .nav-center a:hover::after { width: 100%; }
+
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .pill {
+      background: rgba(255,255,255,0.1);
+      border: none; padding: 8px 18px;
+      border-radius: 999px;
+      color: var(--muted);
+      cursor: pointer; font-size: 0.9rem;
+      transition: 0.3s;
+    }
+    .pill.primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #042226;
+      font-weight: 600;
+    }
+    .pill:hover { transform: scale(1.05); background: rgba(255,255,255,0.2); }
+    .profile {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.08);
+      padding: 6px 12px; border-radius: 999px;
+    }
+    .profile img { width: 32px; height: 32px; border-radius: 50%; }
+
+    /* ===== MAIN LAYOUT ===== */
+    .container {
+      max-width: 1300px;
+      margin: 40px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 24px;
+      flex: 1;
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+      transition: 0.3s;
+    }
+    .panel:hover { transform: translateY(-3px); }
+
+    h3 {
+      margin-top: 0;
+      color: var(--highlight);
+      font-weight: 700;
+    }
+    .sub { color: var(--muted); font-size: 0.9rem; }
+
+    /* ===== CHARTS ===== */
+    .chart-large { height: 340px; margin-top: 12px; }
+    .chart-medium { height: 250px; margin-top: 12px; }
+
+    /* ===== CARDS GRID ===== */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    /* ===== MEDICATION LIST ===== */
+    .med-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px dashed rgba(255,255,255,0.1);
+    }
+    .med-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .med-info strong { color: var(--text); }
+    .status {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+    .status.completed { background: rgba(118,200,147,0.3); color: var(--success); }
+    .status.pending { background: rgba(255,209,102,0.3); color: #ffd166; }
+    .status.missed { background: rgba(230,57,70,0.3); color: var(--alert); }
+
+    /* ===== AI BUBBLE ===== */
+    .ai-bubble {
+      position: fixed;
+      right: 30px; bottom: 30px;
+      width: 70px; height: 70px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: flex; align-items: center; justify-content: center;
+      color: #042226;
+      font-size: 1.6rem;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: 0.3s;
+      z-index: 100;
+    }
+    .ai-bubble:hover { transform: scale(1.1) rotate(8deg); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 20px;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ===== NAVBAR ===== -->
+  <nav>
+    <div class="nav-left">
+      <div class="logo"><i class="fa-solid fa-heart-pulse"></i></div>
+      <h1>MedBuddy Dashboard</h1>
+    </div>
+    <div class="nav-center">
+      <a href="#">Overview</a>
+      <a href="#">Medications</a>
+      <a href="#">Symptoms</a>
+      <a href="#">Reports</a>
+    </div>
+    <div class="nav-right">
+      <button class="pill primary"><i class="fa-solid fa-plus"></i> Add Record</button>
+      <div class="profile">
+        <img src="https://i.pravatar.cc/50" alt="User">
+        <span>Hi, Hithesh</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <div class="container">
+    <main>
+      <section class="panel">
+        <h3>Health Trends</h3>
+        <div class="sub">Sleep vs Activity correlation</div>
+        <div class="chart-large"><canvas id="trendChart"></canvas></div>
+      </section>
+
+      <div class="cards">
+        <div class="panel">
+          <h3>Overall Health Score</h3>
+          <div class="chart-medium"><canvas id="scoreGauge"></canvas></div>
+        </div>
+        <div class="panel">
+          <h3>Medication Adherence</h3>
+          <div class="sub">Track doses and timing accuracy</div>
+          <div id="medList" style="margin-top:12px"></div>
+        </div>
+        <div class="panel">
+          <h3>Activity Patterns</h3>
+          <div class="chart-medium"><canvas id="activityRadar"></canvas></div>
+        </div>
+      </div>
+    </main>
+
+    <aside>
+      <section class="panel">
+        <h3>Symptom Tracker</h3>
+        <div class="chart-medium"><canvas id="symptomDonut"></canvas></div>
+      </section>
+      <section class="panel">
+        <h3>Quick Insights</h3>
+        <p class="sub">Average Sleep: <strong id="avgSleep">7.2 h</strong></p>
+        <p class="sub">Heart Rate: <strong id="avgHR">78 bpm</strong></p>
+        <p class="sub">Steps Avg: <strong id="avgSteps">8920</strong></p>
+      </section>
+    </aside>
+  </div>
+
+  <div class="ai-bubble" title="Chat with MedBuddy AI"><i class="fa-solid fa-robot"></i></div>
+  <footer>© 2025 MedBuddy — Intelligent Health Management System</footer>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    const ctxTrend = document.getElementById('trendChart');
+    const ctxSymptom = document.getElementById('symptomDonut');
+    const ctxActivity = document.getElementById('activityRadar');
+    const ctxGauge = document.getElementById('scoreGauge');
+
+    new Chart(ctxTrend, {
+      type: 'line',
+      data: {
+        labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+        datasets: [
+          { label: 'Sleep (hrs)', data: [6.5,7.2,6.8,7.4,6.9,7.1,7.6], borderColor: '#00b4d8', tension: 0.4 },
+          { label: 'Activity Score', data: [70,65,75,80,78,82,85], borderColor: '#76c893', tension: 0.4 }
+        ]
+      },
+      options: { plugins:{legend:{labels:{color:'#cfe9f5'}}}, scales:{x:{ticks:{color:'#cfe9f5'}},y:{ticks:{color:'#cfe9f5'}}} }
+    });
+
+    new Chart(ctxSymptom, {
+      type: 'doughnut',
+      data: {
+        labels: ['Headache','Fatigue','Cold','Allergies'],
+        datasets:[{ data:[25,35,20,20], backgroundColor:['#00b4d8','#48cae4','#ffd166','#e63946'] }]
+      },
+      options: { plugins:{legend:{labels:{color:'#cfe9f5'}}} }
+    });
+
+    new Chart(ctxActivity, {
+      type: 'radar',
+      data: { labels:['Walking','Running','Cycling','Sports','Strength'], datasets:[{ label:'Weekly Activity', data:[70,50,60,45,55], borderColor:'#48cae4', backgroundColor:'rgba(72,202,228,0.1)' }] },
+      options:{ plugins:{legend:{labels:{color:'#cfe9f5'}}} }
+    });
+
+    new Chart(ctxGauge, {
+      type: 'doughnut',
+      data: { datasets:[{ data:[80,20], backgroundColor:['#00b4d8','rgba(255,255,255,0.1)'], borderWidth:0 }] },
+      options:{ cutout:'80%', plugins:{legend:{display:false}} }
+    });
+
+    const meds = [
+      {name:'Aspirin 75mg', status:'completed'},
+      {name:'Vitamin D 2000IU', status:'pending'},
+      {name:'Metformin 500mg', status:'missed'}
+    ];
+    const medList = document.getElementById('medList');
+    meds.forEach(m=>{
+      medList.innerHTML += `<div class="med-row">
+        <div class="med-info">
+          <i class="fa-solid fa-capsules" style="color:${m.status==='completed'?'#76c893':m.status==='pending'?'#ffd166':'#e63946'}"></i>
+          <strong>${m.name}</strong>
+        </div>
+        <div class="status ${m.status}">${m.status}</div>
+      </div>`;
+    });
+  </script>
+</body>
+</html>

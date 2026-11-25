@@ -1,0 +1,4 @@
+/* Page-specific styles for login.html */
+.card-surface { max-width: 420px; margin: 0 auto; }
+.logo { width: 96px }
+.btn-action { padding: 10px 14px }

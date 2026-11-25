@@ -1,0 +1,135 @@
+/* MedBuddy Unified Theme - applies to all pages */
+:root {
+  --primary: #3a86ff;
+  --primary-dark: #1a237e;
+  --accent: #ffbe0b;
+  --surface: #22223b;
+  --bg: #0d1b2a;
+  --text: #f8f9fa;
+  --muted: #bfc9d1;
+  --success: #43aa8b;
+  --danger: #ef233c;
+  --info: #4361ee;
+}
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Arial, Helvetica, sans-serif;
+  background: linear-gradient(135deg, var(--bg), #1a237e 80%);
+  color: var(--text);
+  min-height: 100vh;
+}
+header {
+  text-align: center;
+  background: var(--surface);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+  margin-bottom: 30px;
+}
+header .logo {
+  width: 120px;
+  padding: 12px;
+  border-radius: 50%;
+  background: rgba(224,230,237,0.1);
+  box-shadow: 0 4px 16px rgba(58,134,255,0.15);
+}
+header h2 {
+  margin: 10px 0 5px 0;
+  font-size: 2.4rem;
+  color: var(--primary);
+  text-shadow: 0 0 10px rgba(58,134,255,0.4);
+}
+header h4 {
+  margin-bottom: 10px;
+  color: var(--muted);
+  font-weight: 500;
+}
+nav ul {
+  padding: 0;
+  margin: 20px 0 0 0;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  list-style: none;
+  flex-wrap: wrap;
+}
+nav ul li a {
+  text-decoration: none;
+  color: var(--primary);
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.03);
+  transition: all .25s;
+}
+nav ul li a:hover {
+  background: var(--primary);
+  color: #22223b;
+  box-shadow: 0 6px 18px rgba(58,134,255,0.12);
+}
+#welcomeUser {
+  margin-top: 12px;
+  font-size: 1.05rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+.grid-articles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+  gap: 20px;
+}
+.card-surface {
+  background: rgba(34,34,59,0.92);
+  border-radius: 14px;
+  padding: 20px;
+  border: 1px solid rgba(58,134,255,0.08);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+}
+.card-surface h2, .card-surface h5 {
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+.text-gradient {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.btn-action {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 8px 16px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  box-shadow: 0 6px 18px rgba(58,134,255,0.12);
+  border: none;
+}
+.btn-action:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(58,134,255,0.18);
+  background: linear-gradient(135deg, var(--accent), var(--primary));
+  color: var(--surface);
+}
+footer {
+  text-align: center;
+  margin-top: 40px;
+  padding: 20px;
+  background: var(--surface);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.35);
+}
+footer .line {
+  height: 3px;
+  width: 65%;
+  background: linear-gradient(90deg, var(--primary), var(--accent), var(--info));
+  margin: 0 auto 12px auto;
+  border-radius: 50px;
+}
+/* Utility classes */
+.text-muted { color: var(--muted) !important; }
+.stat-number { font-weight: 700; }
+.dropdown-menu { background: var(--surface); color: var(--text); }
+.dropdown-item:hover { background: var(--primary); color: var(--surface); }

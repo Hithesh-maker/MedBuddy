@@ -1,0 +1,7 @@
+/* Page-specific styles for index.html */
+/* Use this file to override or add styles for the home page */
+#hero .stat-number { font-size: 1.6rem; color: var(--primary); }
+#hero .btn-action { min-width: 140px }
+#articles article h2 { margin-top: 14px; }
+.card-surface.text-center h5 { font-size: 1.05rem; }
+@media (max-width: 576px) { #hero .stat-number { font-size: 1.2rem } }
